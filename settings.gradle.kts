@@ -41,7 +41,7 @@ dependencyResolutionManagement {
       "javac",
       "javapoet",
       "jaxp",
-      "jdk-compiler",
+      // "jdk-compiler", // Disabled - has compilation errors, mod by piash
       "jdk-jdeps",
       "jdt",
       "layoutlib-api",
