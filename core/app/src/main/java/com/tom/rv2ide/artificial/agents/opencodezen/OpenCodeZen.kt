@@ -54,6 +54,10 @@ class OpenCodeZen : AIAgent {
   private val modificationHistory = mutableListOf<ModificationAttempt>()
   private var currentAttemptCount = 0
   private val maxRetryAttempts = 3
+  
+  // Performance optimization: Cache for file reading
+  private val fileContentCache = mutableMapOf<String, Pair<Long, String>>()
+  private val cacheExpirationMs = 5000L // 5 seconds cache
   private var agents: Agents? = null
   private var selectedModel: String = "opencode/claude-sonnet-4-5"
   override val providerId = "opencodezen"
@@ -116,6 +120,7 @@ class OpenCodeZen : AIAgent {
     conversationHistory.clear()
     modificationHistory.clear()
     currentAttemptCount = 0
+    fileContentCache.clear() // Clear cache on conversation reset
   }
 
   override fun recordModification(filePath: String, oldContent: String?, newContent: String, success: Boolean) {
@@ -389,27 +394,45 @@ class OpenCodeZen : AIAgent {
     val filesContent = mutableMapOf<String, String>()
     val tree = projectTreeResult?.tree ?: return filesContent
     
+    val currentTime = System.currentTimeMillis()
     val filePaths = tree.lines().filter { it.isNotBlank() }
     
-    filePaths.forEach { filePath ->
-      val trimmedPath = filePath.trim()
-      val file = File(trimmedPath)
-      
-      if (file.isFile && 
-          (trimmedPath.endsWith(".kt") || 
-           trimmedPath.endsWith(".java") ||
-           trimmedPath.endsWith(".xml") ||
-           trimmedPath.endsWith(".gradle") ||
-           trimmedPath.endsWith(".gradle.kts")) &&
-          !trimmedPath.contains("/build/") && 
-          !trimmedPath.contains("/.gradle/")) {
+    // Performance optimization: Limit files and use caching
+    val relevantExtensions = setOf(".kt", ".java", ".xml", ".gradle", ".gradle.kts")
+    
+    filePaths.asSequence()
+      .map { it.trim() }
+      .filter { path ->
+        val file = File(path)
+        file.isFile && 
+        relevantExtensions.any { path.endsWith(it) } &&
+        !path.contains("/build/") && 
+        !path.contains("/.gradle/") &&
+        file.length() < 500_000 // Skip very large files (>500KB)
+      }
+      .take(50) // Limit to 50 most recent files for performance
+      .forEach { trimmedPath ->
         try {
-          val content = file.readText()
-          filesContent[trimmedPath] = content
+          val file = File(trimmedPath)
+          val lastModified = file.lastModified()
+          
+          // Check cache first
+          val cached = fileContentCache[trimmedPath]
+          if (cached != null && (currentTime - cached.first) < cacheExpirationMs) {
+            filesContent[trimmedPath] = cached.second
+          } else {
+            val content = file.readText()
+            filesContent[trimmedPath] = content
+            fileContentCache[trimmedPath] = Pair(currentTime, content)
+          }
         } catch (e: Exception) {
           // Skip files that can't be read
         }
       }
+    
+    // Clean old cache entries
+    if (fileContentCache.size > 100) {
+      fileContentCache.entries.removeIf { (currentTime - it.value.first) > cacheExpirationMs }
     }
     
     return filesContent

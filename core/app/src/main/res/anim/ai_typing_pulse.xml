@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pulsing animation for AI typing indicator - mod by piash -->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:repeatCount="infinite"
+    android:repeatMode="reverse">
+    
+    <alpha
+        android:duration="800"
+        android:fromAlpha="0.3"
+        android:toAlpha="1.0"
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+        
+    <scale
+        android:duration="800"
+        android:fromXScale="0.95"
+        android:fromYScale="0.95"
+        android:toXScale="1.05"
+        android:toYScale="1.05"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+</set>
