@@ -22,5 +22,5 @@ plugins {
 
 dependencies {
   api(projects.buildDeps.javaCompiler)
-  api(projects.buildDeps.jdkCompiler)
+  // api(projects.buildDeps.jdkCompiler) // Disabled - jdk-compiler module removed, mod by piash
 }
