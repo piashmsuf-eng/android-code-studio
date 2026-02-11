@@ -42,7 +42,7 @@ dependencyResolutionManagement {
       "javapoet",
       "jaxp",
       // "jdk-compiler", // Disabled - has compilation errors, mod by piash
-      "jdk-jdeps",
+      // "jdk-jdeps", // Disabled - depends on jdk-compiler, mod by piash
       "jdt",
       "layoutlib-api",
       "logback-core"

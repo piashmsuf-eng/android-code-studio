@@ -57,7 +57,7 @@ include(
   ":jaxp",
   ":java-compiler",
   // ":jdk-compiler", // Temporarily disabled - has compilation errors, mod by piash
-  ":jdk-jdeps",
+  // ":jdk-jdeps", // Temporarily disabled - depends on jdk-compiler, mod by piash
   ":jdt",
   ":layoutlib-api",
   ":logback-core",
