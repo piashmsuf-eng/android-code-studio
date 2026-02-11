@@ -36,7 +36,7 @@ dependencyResolutionManagement {
     "build-deps" to arrayOf(
       "appintro",
       "fuzzysearch",
-      "google-java-format",
+      // "google-java-format", // Disabled - depends on openjdk.*, mod by piash
       "java-compiler",
       "javac",
       "javapoet",
