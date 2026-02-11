@@ -74,7 +74,7 @@ dependencies {
   implementation(libs.composite.javac)
   implementation(libs.composite.javapoet)
   implementation(libs.composite.jaxp)
-  implementation(libs.composite.jdkJdeps)
+  // implementation(libs.composite.jdkJdeps) // Disabled - jdk-jdeps module removed, mod by piash
   implementation(libs.composite.jdt)
   implementation(libs.composite.googleJavaFormat)
 
