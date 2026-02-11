@@ -56,7 +56,7 @@ include(
   ":javapoet",
   ":jaxp",
   ":java-compiler",
-  ":jdk-compiler",
+  // ":jdk-compiler", // Temporarily disabled - has compilation errors, mod by piash
   ":jdk-jdeps",
   ":jdt",
   ":layoutlib-api",
