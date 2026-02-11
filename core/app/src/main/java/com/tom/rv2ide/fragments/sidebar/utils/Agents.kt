@@ -46,4 +46,6 @@ val ai_agents =
         "gemini-1.5-pro",
         "deepseek-chat",
         "deepseek-reasoner",
+        "opencode-zen",
+        "letta-ai",
     )
