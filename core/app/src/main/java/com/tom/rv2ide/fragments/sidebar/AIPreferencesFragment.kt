@@ -89,10 +89,12 @@ class AIPreferencesFragment(
             "claude" to "Anthropic Claude",
             "deepseek" to "DeepSeek",
             "grok" to "xAI Grok",
-            "localllm" to "Local LLM"
+            "localllm" to "Local LLM",
+            "opencodezen" to "OpenCode Zen",
+            "lettaai" to "Letta.ai"
         )
         
-        val allProviderIds = listOf("gemini", "openai", "claude", "deepseek", "grok", "localllm")
+        val allProviderIds = listOf("gemini", "openai", "claude", "deepseek", "grok", "localllm", "opencodezen", "lettaai")
         val providerNames = allProviderIds.map { providerMap[it] ?: it }
         
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, providerNames)
@@ -126,7 +128,9 @@ class AIPreferencesFragment(
             "claude" to "Anthropic Claude",
             "deepseek" to "DeepSeek",
             "grok" to "xAI Grok",
-            "localllm" to "Local LLM"
+            "localllm" to "Local LLM",
+            "opencodezen" to "OpenCode Zen",
+            "lettaai" to "Letta.ai"
         )
         
         val currentProviderId = agents.getProvider()

@@ -144,7 +144,24 @@ class Agents(ctx: Context) {
     "local-model"
   )
   
-  val ai_agents = openai_models + claude_models + gemini_models + deepseek_models + grok_models + localllm_models
+  private val opencodezen_models = arrayOf(
+    "opencode/claude-sonnet-4-5",
+    "opencode/claude-opus-4",
+    "opencode/gpt-4o",
+    "opencode/gpt-4o-mini",
+    "opencode/deepseek-chat",
+    "opencode/gemini-2.5-pro",
+    "opencode/gemini-2.5-flash",
+    "opencode/llama-3.3-70b"
+  )
+  
+  private val lettaai_models = arrayOf(
+    "letta-free",
+    "letta-pro",
+    "letta-premium"
+  )
+  
+  val ai_agents = openai_models + claude_models + gemini_models + deepseek_models + grok_models + localllm_models + opencodezen_models + lettaai_models
   
   fun getModelsForProvider(providerId: String): Array<String> {
     return when(providerId) {
@@ -154,6 +171,8 @@ class Agents(ctx: Context) {
       "deepseek" -> deepseek_models
       "grok" -> grok_models
       "localllm" -> localllm_models
+      "opencodezen" -> opencodezen_models
+      "lettaai" -> lettaai_models
       else -> gemini_models
     }
   }
@@ -166,6 +185,8 @@ class Agents(ctx: Context) {
       modelName in deepseek_models -> "deepseek"
       modelName in grok_models -> "grok"
       modelName in localllm_models -> "localllm"
+      modelName in opencodezen_models -> "opencodezen"
+      modelName in lettaai_models -> "lettaai"
       else -> null
     }
   }
@@ -177,6 +198,8 @@ class Agents(ctx: Context) {
           name in claude_models -> "claude"
           name in deepseek_models -> "deepseek"
           name in grok_models -> "grok"
+          name in opencodezen_models -> "opencodezen"
+          name in lettaai_models -> "lettaai"
           else -> sp.getString(PROVIDER_KEY, "gemini") ?: "gemini"
       }
       
@@ -194,6 +217,8 @@ class Agents(ctx: Context) {
       "claude" -> "claude-sonnet-4-20250514"
       "deepseek" -> "deepseek-chat"
       "grok" -> "grok-beta"
+      "opencodezen" -> "opencode/claude-sonnet-4-5"
+      "lettaai" -> "letta-free"
       else -> "gemini-2.5-pro"
     }
   }

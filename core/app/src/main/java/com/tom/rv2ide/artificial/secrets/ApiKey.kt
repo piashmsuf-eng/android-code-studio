@@ -79,6 +79,26 @@ object ApiKey {
         return key.isNotBlank() && key.length > 20
     }
     
+    // OpenCode Zen API Key
+    fun getOpenCodeZenApiKey(): String {
+        return prefManager.getString("ai_agent_opencodezen_api_key", "")
+    }
+    
+    fun hasOpenCodeZenKey(): Boolean {
+        val key = getOpenCodeZenApiKey()
+        return key.isNotBlank() && key.length > 20
+    }
+    
+    // Letta.ai API Key
+    fun getLettaAIApiKey(): String {
+        return prefManager.getString("ai_agent_lettaai_api_key", "")
+    }
+    
+    fun hasLettaAIKey(): Boolean {
+        val key = getLettaAIApiKey()
+        return key.isNotBlank() && key.length > 20
+    }
+    
     // Legacy methods for backward compatibility
     @Deprecated("Use getGeminiApiKey() instead", ReplaceWith("getGeminiApiKey()"))
     fun getApiKey(): String {
@@ -93,6 +113,8 @@ object ApiKey {
         if (hasDeepseekKey()) providers.add("Deepseek")
         if (hasAnthropicKey()) providers.add("Anthropic")
         if (hasGrokKey()) providers.add("Grok")
+        if (hasOpenCodeZenKey()) providers.add("OpenCode Zen")
+        if (hasLettaAIKey()) providers.add("Letta.ai")
         return providers
     }
     
@@ -103,13 +125,15 @@ object ApiKey {
             "openai" to getOpenAIApiKey(),
             "deepseek" to getDeepseekApiKey(),
             "anthropic" to getAnthropicApiKey(),
-            "grok" to getGrokApiKey()
+            "grok" to getGrokApiKey(),
+            "opencodezen" to getOpenCodeZenApiKey(),
+            "lettaai" to getLettaAIApiKey()
         ).filterValues { it.isNotBlank() }
     }
     
     // Check if any API key is configured
     fun hasAnyApiKey(): Boolean {
         return hasGeminiKey() || hasOpenAIKey() || hasDeepseekKey() || 
-               hasAnthropicKey() || hasGrokKey()
+               hasAnthropicKey() || hasGrokKey() || hasOpenCodeZenKey() || hasLettaAIKey()
     }
 }
