@@ -116,7 +116,7 @@ include(
   ":event:eventbus",
   ":event:eventbus-android",
   ":event:eventbus-events",
-  ":java:javac-services",
+  // ":java:javac-services", // Temporarily disabled - depends on openjdk.*, mod by piash
   ":java:lsp-setup",
   ":java:lsp",
   ":logging:idestats",

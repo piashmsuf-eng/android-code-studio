@@ -51,7 +51,7 @@ dependencyResolutionManagement {
 include(
   ":appintro",
   ":fuzzysearch",
-  ":google-java-format",
+  // ":google-java-format", // Temporarily disabled - depends on openjdk.tools.javac.*, mod by piash
   ":javac",
   ":javapoet",
   ":jaxp",
